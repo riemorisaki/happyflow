@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>森崎梨恵 | 思考整理パートナー</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a2620;
+    --ink-light: #5a5248;
+    --paper: #faf8f4;
+    --paper-warm: #f4f0e8;
+    --mist: #dde4e8;
+    --blue-pale: #c8d8e4;
+    --blue-mid: #8aa8bc;
+    --blue-deep: #4a6e84;
+    --gold: #b8965a;
+    --gold-light: #d4b078;
+    --sage: #8a9e8c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--paper) 45%, var(--blue-pale) 100%);
+  }
+
+  .hero-orb {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%,
+      rgba(200,216,228,0.9) 0%,
+      rgba(138,168,188,0.6) 40%,
+      rgba(74,110,132,0.3) 70%,
+      transparent 100%);
+    filter: blur(2px);
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-52%) scale(1.02); }
+  }
+
+  .hero-diagonal {
+    position: absolute;
+    top: 0; right: 0;
+    width: 55%;
+    height: 100%;
+    background: linear-gradient(145deg, transparent 30%, rgba(200,216,228,0.25) 100%);
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 80px 8vw;
+    max-width: 680px;
+    animation: fadeUp 1s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--blue-deep);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-catch {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--ink);
+    margin-bottom: 32px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .hero-catch em {
+    font-style: normal;
+    color: var(--blue-deep);
+    border-bottom: 1px solid var(--blue-mid);
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    line-height: 1.9;
+    margin-bottom: 48px;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  .hero-name {
+    animation: fadeUp 1s 0.5s ease both;
+  }
+
+  .hero-name .name-ja {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-name .name-role {
+    font-size: 0.85rem;
+    color: var(--blue-deep);
+    letter-spacing: 0.15em;
+    margin-top: 6px;
+  }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 100px 8vw;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    color: var(--ink);
+  }
+
+  /* ── PAIN POINTS ── */
+  .pain {
+    background: var(--paper-warm);
+    position: relative;
+  }
+
+  .pain::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--blue-pale), var(--blue-deep));
+  }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+  }
+
+  .pain-item {
+    background: white;
+    border: 1px solid rgba(138,168,188,0.3);
+    border-left: 3px solid var(--blue-mid);
+    padding: 28px 32px;
+    border-radius: 2px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pain-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(74,110,132,0.1);
+  }
+
+  /* ── FLOW ── */
+  .flow {
+    background: white;
+  }
+
+  .flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+
+  .flow-node {
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .flow-node .node-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+  }
+
+  .flow-node:hover .node-circle {
+    transform: scale(1.08);
+  }
+
+  .flow-node:nth-child(1) .node-circle {
+    background: rgba(200,216,228,0.3);
+    border: 1px solid var(--blue-pale);
+    color: var(--blue-deep);
+  }
+  .flow-node:nth-child(3) .node-circle {
+    background: rgba(138,168,188,0.25);
+    border: 1px solid var(--blue-mid);
+    color: var(--blue-deep);
+  }
+  .flow-node:nth-child(5) .node-circle {
+    background: rgba(74,110,132,0.2);
+    border: 1px solid var(--blue-deep);
+    color: var(--blue-deep);
+  }
+
+  .flow-node .node-label {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    letter-spacing: 0.1em;
+  }
+
+  .flow-arrow {
+    font-size: 1.5rem;
+    color: var(--blue-mid);
+    padding: 0 8px;
+  }
+
+  .flow-outcomes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .outcome-item {
+    padding: 24px 28px;
+    border: 1px solid rgba(184,150,90,0.2);
+    border-top: 2px solid var(--gold);
+    background: var(--paper-warm);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--ink-light);
+  }
+
+  /* ── STANCE ── */
+  .stance {
+    background: var(--ink);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stance::before {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,110,132,0.3) 0%, transparent 70%);
+  }
+
+  .stance .section-title {
+    color: rgba(255,255,255,0.9);
+  }
+
+  .stance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2px;
+  }
+
+  .stance-item {
+    padding: 40px 32px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s ease;
+  }
+
+  .stance-item:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .stance-item .stance-icon {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--gold-light);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .stance-item .stance-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 12px;
+  }
+
+  .stance-item p {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ── CASES ── */
+  .cases {
+    background: var(--paper);
+  }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1000px;
+  }
+
+  .case-card {
+    background: white;
+    border: 1px solid rgba(138,168,188,0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .case-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(74,110,132,0.12);
+  }
+
+  .case-num {
+    background: var(--blue-deep);
+    color: white;
+    padding: 12px 24px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+  }
+
+  .case-body {
+    padding: 28px 28px 32px;
+  }
+
+  .case-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+  }
+
+  .case-sub {
+    font-size: 0.8rem;
+    color: var(--blue-deep);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .case-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .case-row {
+    display: flex;
+    gap: 12px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .case-row-label {
+    font-weight: 500;
+    color: var(--blue-deep);
+    min-width: 48px;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    padding-top: 2px;
+  }
+
+  .case-row-text {
+    color: var(--ink-light);
+  }
+
+  .case-result {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(74,110,132,0.06);
+    border-left: 3px solid var(--blue-deep);
+    font-size: 0.85rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  /* ── SKILLS ── */
+  .skills {
+    background: var(--paper-warm);
+  }
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 800px;
+  }
+
+  .skill-tag {
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid rgba(138,168,188,0.4);
+    font-size: 0.85rem;
+    color: var(--ink-light);
+    border-radius: 1px;
+    transition: all 0.2s ease;
+  }
+
+  .skill-tag:hover {
+    background: var(--blue-pale);
+    border-color: var(--blue-mid);
+    color: var(--blue-deep);
+  }
+
+  /* ── TRACK RECORD ── */
+  .track {
+    background: white;
+    text-align: center;
+  }
+
+  .track-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .track-num {
+    text-align: center;
+  }
+
+  .track-num .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 300;
+    color: var(--blue-deep);
+    display: block;
+    line-height: 1;
+  }
+
+  .track-num .unit {
+    font-size: 1rem;
+    color: var(--blue-deep);
+    margin-left: 4px;
+  }
+
+  .track-num .label {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    margin-top: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  .track-note {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.9;
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: linear-gradient(135deg, var(--blue-deep) 0%, #2e4a5e 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  }
+
+  .contact .section-title {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
+  }
+
+  .contact-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 48px;
+    line-height: 1.9;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .contact-link:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 8vw;
+    background: var(--ink);
+    color: rgba(255,255,255,0.35);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-diagonal"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <p class="hero-label">Thinking Partner</p>
+    <h1 class="hero-catch">
+      頭の中にあるのに、<br>
+      まだ<em>言葉になっていない</em>。
+    </h1>
+    <p class="hero-sub">
+      頭の中にあるものを、言葉と構造にします。<br>
+      事業や構想を前に進めるために、<br>思考を整理し判断しやすくする壁打ちを行います。
+    </p>
+    <div class="hero-name">
+      <p class="name-ja">森崎 梨恵</p>
+      <p class="name-role">思考整理パートナー</p>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="reveal">
+    <p class="section-label">For you</p>
+    <h2 class="section-title">こんな状態のとき、<br>力を発揮します</h2>
+    <div class="divider"></div>
+    <div class="pain-grid">
+      <div class="pain-item">やりたいことはある。でも人に説明しようとすると、うまく言葉が出てこない</div>
+      <div class="pain-item">考えることが多すぎて、何から手をつければいいかわからなくなっている</div>
+      <div class="pain-item">新しいことを始めようとしている、または事業が広がり始めて、判断が追いつかなくなってきた</div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="flow">
+  <div class="reveal">
+    <p class="section-label">Process</p>
+    <h2 class="section-title">対話を通じて、思考を動かす</h2>
+    <div class="divider"></div>
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="node-circle">壁打ち</div>
+        <p class="node-label">対話・問い</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle">言語化</div>
+        <p class="node-label">曖昧なままにしない</p>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-circle">構造化</div>
+        <p class="node-label">正解は提示しない</p>
+      </div>
+    </div>
+
+    <div class="flow-outcomes">
+      <div class="outcome-item">事業の軸が言葉になり、判断がしやすくなる</div>
+      <div class="outcome-item">プレゼンや資料が「説明」から「人が自然と巻き込まれる対話」になる</div>
+      <div class="outcome-item">関係者が指示待ちではなく、自分ごとで考え始める</div>
+    </div>
+  </div>
+</section>
+
+<!-- STANCE -->
+<section class="stance">
+  <div class="reveal">
+    <p class="section-label" style="color:var(--gold-light)">My Stance</p>
+    <h2 class="section-title">私が大切にしていること</h2>
+    <div class="divider"></div>
+    <div class="stance-grid">
+      <div class="stance-item">
+        <span class="stance-icon">—</span>
+        <p class="stance-title">正解は提示しない</p>
+        <p>答えを渡すのではなく、相手が自分の答えを見つけられる状態をつくります。</p>
+      </div>
+      <div class="stance-item">
+        <span class="stance-icon">—</span>
+        <p class="stance-title">曖昧なままにしない</p>
+        <p>「なんとなく」で終わらせず、言葉と構造に落とし込むところまで一緒に進みます。</p>
+      </div>
+      <div class="stance-item">
+        <span class="stance-icon">—</span>
+        <p class="stance-title">同じ熱量で考える</p>
+        <p>数字やKPIだけで話を進めません。事業への想いを大切にしながら、伴走します。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases">
+  <div class="reveal">
+    <p class="section-label">Works</p>
+    <h2 class="section-title">どんな方に、どんな関わりをして、<br>何が変わったのか</h2>
+    <div class="divider"></div>
+    <div class="case-grid">
+
+      <div class="case-card">
+        <div class="case-num">Case 01 — ゼロから講座を構築</div>
+        <div class="case-body">
+          <p class="case-title">構想を継続的な売り上げへ</p>
+          <p class="case-sub">個人事業主 / 講座ビジネス</p>
+          <div class="case-flow">
+            <div class="case-row">
+              <span class="case-row-label">Before</span>
+              <span class="case-row-text">構想はあるが、形になっていなかった</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">関わり</span>
+              <span class="case-row-text">講座設計・集客管理・継続設計（継続講座・サロン・イベントなど）</span>
+            </div>
+          </div>
+          <div class="case-result">
+            3年間で累計2,500万円以上の売上を生む講座に。年間売上 約10倍、受講者数延べ70名以上
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-num">Case 02 — オンライン教室の設計</div>
+        <div class="case-body">
+          <p class="case-title">全国から参加、延べ約60名が受講</p>
+          <p class="case-sub">教室運営 / オンライン展開</p>
+          <div class="case-flow">
+            <div class="case-row">
+              <span class="case-row-label">Before</span>
+              <span class="case-row-text">リアルレッスンのみ、地域限定</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">関わり</span>
+              <span class="case-row-text">オンライン化・導線設計（申込フォーム・体験レッスン・LINE構築）</span>
+            </div>
+          </div>
+          <div class="case-result">
+            地域限定 → 全国展開。0名 → 延べ60名以上
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-num">Case 03 — 現場が回る仕組みづくり</div>
+        <div class="case-body">
+          <p class="case-title">人が増えるほど苦しくなっていた運営を整えた</p>
+          <p class="case-sub">事業運営 / 仕組み化</p>
+          <div class="case-flow">
+            <div class="case-row">
+              <span class="case-row-label">Before</span>
+              <span class="case-row-text">申し込みが増えるほど対応に追われ、本来の仕事ができなくなっていた</span>
+            </div>
+            <div class="case-row">
+              <span class="case-row-label">関わり</span>
+              <span class="case-row-text">受付・管理・コミュニケーション設計の仕組み化</span>
+            </div>
+          </div>
+          <div class="case-result">
+            対話によって流れが整理され、人が増えても運営者が疲弊しない状態に
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills">
+  <div class="reveal">
+    <p class="section-label">Skills</p>
+    <h2 class="section-title">これまでの成果を支えている<br>主なスキル</h2>
+    <div class="divider"></div>
+    <div class="skills-grid">
+      <span class="skill-tag">AI活用（思考整理・資料化・導線設計・業務効率化）</span>
+      <span class="skill-tag">プレゼン資料制作</span>
+      <span class="skill-tag">SNS運用・動画編集</span>
+      <span class="skill-tag">Canvaデザイン</span>
+      <span class="skill-tag">Illustrator制作</span>
+      <span class="skill-tag">教育・イベント企画運営（子ども向け／大人向け）</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRACK -->
+<section class="track">
+  <div class="reveal">
+    <p class="section-label" style="text-align:center">Track Record</p>
+    <h2 class="section-title" style="text-align:center">費用対効果に納得いただけなかったケースはありません</h2>
+    <div class="divider" style="margin: 0 auto 48px"></div>
+    <div class="track-numbers">
+      <div class="track-num">
+        <span class="num">2,500<span class="unit">万円+</span></span>
+        <p class="label">累計売上貢献（3年間）</p>
+      </div>
+      <div class="track-num">
+        <span class="num">70<span class="unit">名+</span></span>
+        <p class="label">受講者数延べ（最大案件）</p>
+      </div>
+      <div class="track-num">
+        <span class="num">×10</span>
+        <p class="label">年間売上倍率</p>
+      </div>
+    </div>
+    <p class="track-note">
+      短期的ではなく、"成果が出続ける状態"をつくる。<br>
+      それが、私の伴走のゴールです。
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="reveal" style="position:relative;z-index:1">
+    <p class="section-label" style="color:var(--gold-light)">Contact</p>
+    <h2 class="section-title">まずは、壁打ちから。</h2>
+    <p class="contact-sub">
+      「相談できるか迷っている」という状態でも、お気軽にどうぞ。<br>
+      頭の中にあるものを、一緒に言葉にするところから始めます。
+    </p>
+    <div class="contact-links">
+      <a href="mailto:woriek358@gmail.com" class="contact-link">Mail</a>
+      <a href="https://note.com/morikari/n/n437591c4562c" class="contact-link" target="_blank">My Story on note</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>森崎梨恵 | 思考整理パートナー</span>
+  <span>© 2025 Rie Morisaki / Happy Flow</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
